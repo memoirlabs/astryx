@@ -1,0 +1,54 @@
+* astryx 0.1
+
+** Runtime Smoke Tests
+
+*** 000 Intro.md
+# Runtime Lab
+
+Cells here exercise the bounded local JavaScript runtime.
+
+*** 001 BasicOutputs.js
+ctx.text("basic text output");
+ctx.json({
+  ok: true,
+  cells: 5
+});
+ctx.table([
+  { name: "alpha", score: 1 },
+  { name: "beta", score: 2 }
+]);
+
+*** 002 ImportSupport.js
+import { basename, join } from "node:path";
+
+const target = join("nested", "result.json");
+ctx.text(basename(target));
+ctx.json({ target });
+
+*** 003 DataAndOut.js
+const input = await ctx.data.json("input.json");
+const total = input.values.reduce((sum, value) => sum + value, 0);
+
+await ctx.out.writeJson("runtime-lab-result.json", {
+  name: input.name,
+  total,
+  enabled: input.enabled
+});
+
+ctx.json({
+  read: input.name,
+  total,
+  wrote: "runtime-lab-result.json"
+});
+
+*** 004 IntentionalError.js
+ctx.text("this output should still be captured before the throw");
+throw new Error("intentional runtime failure");
+
+*** 005 Timeout.js
+const started = Date.now();
+while (Date.now() - started < 2000) {
+  // Prove the runtime kills long-running work.
+}
+
+ctx.text("should not reach this");

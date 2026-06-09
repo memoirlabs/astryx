@@ -1,0 +1,41 @@
+* astryx 0.1
+
+** 010 Component States
+
+*** 010.010 Intro.md
+# Button Lab
+
+A tiny starter notebook for previewing UI states with built-in Astryx primitives.
+
+*** 010.020 BasicButton.html
+<ax-card>
+  <ax-badge>Button</ax-badge>
+  <ax-title>Primary Action</ax-title>
+  <ax-text>This is a clean default button state.</ax-text>
+  <ax-row>
+    <ax-button>Save changes</ax-button>
+    <ax-button variant="ghost">Cancel</ax-button>
+  </ax-row>
+</ax-card>
+
+*** 010.030 ButtonGroup.html
+<ax-card>
+  <ax-badge>Variants</ax-badge>
+  <ax-title>Button Group</ax-title>
+  <ax-stack>
+    <ax-row>
+      <ax-button>Primary</ax-button>
+      <ax-button variant="ghost">Ghost</ax-button>
+    </ax-row>
+    <ax-muted>Later this becomes a real props/state matrix.</ax-muted>
+  </ax-stack>
+</ax-card>
+
+** 020 Data
+
+*** 020.010 ButtonData.json
+{
+  "variants": ["primary", "ghost"],
+  "sizes": ["small", "medium", "large"],
+  "states": ["default", "hover", "disabled", "loading"]
+}

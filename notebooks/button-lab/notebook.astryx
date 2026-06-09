@@ -1,0 +1,52 @@
+* astryx 0.1
+
+** Component States
+
+*** 000 Intro.md
+# HTML Lab
+
+A tiny notebook for plain HTML, CSS, JSON, and JavaScript cells.
+
+*** 001 BasicButton.html
+<button class="button primary">Save changes</button>
+<button class="button">Cancel</button>
+
+*** 002 Styles.css
+body {
+  padding: 24px;
+}
+
+.button {
+  border: 1px solid #999;
+  background: white;
+  color: #111;
+  padding: 8px 12px;
+  font: inherit;
+}
+
+.button.primary {
+  background: #111;
+  color: white;
+}
+
+** Data
+
+*** 003 ButtonData.json
+{
+  "variants": ["primary", "ghost"],
+  "sizes": ["small", "medium", "large"],
+  "states": ["default", "hover", "disabled", "loading"]
+}
+
+*** 004 ButtonMatrix.js
+const data = await ctx.data.json("button-matrix.json").catch(() => ({
+  variants: ["primary", "ghost"],
+  sizes: ["small", "medium"],
+  states: ["default", "disabled"]
+}));
+
+ctx.json(data);
+ctx.table(data.variants.map((variant) => ({
+  variant,
+  states: data.states.length
+})));

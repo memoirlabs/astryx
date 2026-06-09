@@ -1,0 +1,17 @@
+title = "Empty Notebook"
+version = "0.1"
+
+[preview]
+width = 390
+height = 844
+
+[paths]
+data = "data"
+out = "out"
+
+[execution]
+timeoutMs = 5000
+stdoutBytes = 1048576
+stderrBytes = 1048576
+resultBytes = 5242880
+maxConcurrentRuns = 1

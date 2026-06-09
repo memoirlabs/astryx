@@ -1,0 +1,31 @@
+* astryx 0.1
+
+** Start
+
+*** 000 Welcome.md
+# Empty Notebook
+
+Start writing cells below.
+
+Astryx notebooks are small folders with a source file, data folder, and output folder.
+
+*** 001 Blank.html
+<main>
+  <h1>New cell</h1>
+  <p>Write normal HTML here.</p>
+  <button>Button</button>
+</main>
+
+*** 002 Data.json
+{
+  "name": "Astryx",
+  "status": "empty"
+}
+
+*** 003 FirstRun.js
+ctx.text("Hello from a bounded local JavaScript cell.");
+ctx.json({
+  cell: "003",
+  runtime: "bun",
+  ok: true
+});
