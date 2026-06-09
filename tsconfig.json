@@ -4,11 +4,18 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["bun-types"],
+    "types": ["bun"],
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@astryx/core/*": ["packages/core/src/*.ts"],
+      "@astryx/renderer/*": ["packages/renderer/src/*.ts"],
+      "@astryx/runtime-bun/*": ["packages/runtime-bun/src/*.ts"]
+    }
   },
   "include": ["apps/**/*.ts", "packages/**/*.ts", "scripts/**/*.ts"]
 }

@@ -1,6 +1,13 @@
 .DS_Store
 node_modules/
+**/node_modules/
 
 notebooks/*/.astryx/
 notebooks/*/out/*
 !notebooks/*/out/.gitkeep
+
+dist/
+coverage/
+astryx-starter
+astryx-starter/**
+astryx-starter.zip

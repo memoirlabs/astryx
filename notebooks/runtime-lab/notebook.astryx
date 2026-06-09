@@ -5,9 +5,9 @@
 *** 000 Intro.md
 # Runtime Lab
 
-Cells here exercise the bounded local JavaScript runtime.
+Cells here exercise the bounded local TypeScript runtime.
 
-*** 001 BasicOutputs.js
+*** 001 BasicOutputs.ts
 ctx.text("basic text output");
 ctx.json({
   ok: true,
@@ -18,15 +18,21 @@ ctx.table([
   { name: "beta", score: 2 }
 ]);
 
-*** 002 ImportSupport.js
+*** 002 ImportSupport.ts
 import { basename, join } from "node:path";
 
 const target = join("nested", "result.json");
 ctx.text(basename(target));
 ctx.json({ target });
 
-*** 003 DataAndOut.js
-const input = await ctx.data.json("input.json");
+*** 003 DataAndOut.ts
+type RuntimeInput = {
+  name: string;
+  values: number[];
+  enabled: boolean;
+};
+
+const input = await ctx.data.json<RuntimeInput>("input.json");
 const total = input.values.reduce((sum, value) => sum + value, 0);
 
 await ctx.out.writeJson("runtime-lab-result.json", {
@@ -41,11 +47,11 @@ ctx.json({
   wrote: "runtime-lab-result.json"
 });
 
-*** 004 IntentionalError.js
+*** 004 IntentionalError.ts
 ctx.text("this output should still be captured before the throw");
 throw new Error("intentional runtime failure");
 
-*** 005 Timeout.js
+*** 005 Timeout.ts
 const started = Date.now();
 while (Date.now() - started < 2000) {
   // Prove the runtime kills long-running work.

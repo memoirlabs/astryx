@@ -1,8 +1,12 @@
 {
-  "name": "astryx-starter",
+  "name": "astryx",
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "bun --watch apps/local/src/server/index.ts",
     "new": "bun scripts/new-notebook.ts",

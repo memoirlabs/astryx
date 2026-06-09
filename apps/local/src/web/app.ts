@@ -1,8 +1,8 @@
-import type { Cell, Notebook, Section } from "../../../../packages/core/src/model";
-import type { CellRunResult, RunOutput } from "../../../../packages/core/src/run";
-import { renderMarkdown } from "../../../../packages/renderer/src/markdown";
-import { renderHtmlFragment } from "../../../../packages/renderer/src/render";
-import { extFromFilename, serializeAstryx } from "../../../../packages/core/src/parse";
+import type { Cell, Notebook, Section } from "@astryx/core/model";
+import type { CellCheckResult, CellRunResult, RunOutput } from "@astryx/core/run";
+import { extFromFilename, serializeAstryx } from "@astryx/core/parse";
+import { renderMarkdown } from "@astryx/renderer/markdown";
+import { renderHtmlFragment } from "@astryx/renderer/render";
 
 type NotebookSummary = {
   name: string;
@@ -14,6 +14,7 @@ type State = {
   currentNotebookName: string | null;
   notebook: Notebook | null;
   runs: Record<string, CellRunResult>;
+  checks: Record<string, CellCheckResult>;
   message: string;
   error: string;
 };
@@ -23,6 +24,7 @@ const state: State = {
   currentNotebookName: null,
   notebook: null,
   runs: {},
+  checks: {},
   message: "",
   error: "",
 };
@@ -69,6 +71,7 @@ async function loadNotebook(name: string) {
 
   state.notebook = payload.notebook;
   state.runs = {};
+  state.checks = {};
   render();
 }
 
@@ -179,12 +182,45 @@ async function runCell(cellId: string) {
   render();
 }
 
+async function checkCell(cellId: string) {
+  if (!state.currentNotebookName) return;
+
+  await saveNotebook();
+
+  state.message = "Checking types...";
+  state.error = "";
+  render();
+
+  const res = await fetch(
+    `/api/check-cell/${encodeURIComponent(state.currentNotebookName)}/${encodeURIComponent(cellId)}`,
+    { method: "POST" },
+  );
+
+  const payload = (await res.json()) as
+    | { ok: true; result: CellCheckResult }
+    | { error: string };
+
+  if ("error" in payload) {
+    state.error = payload.error;
+    state.message = "";
+  } else {
+    state.checks[cellId] = payload.result;
+    state.message = payload.result.ok
+      ? `Types OK for ${cellId} in ${payload.result.durationMs} ms`
+      : `Typecheck failed for ${cellId}`;
+    state.error = "";
+  }
+
+  render();
+}
+
 function updateCellBody(cellId: string, body: string) {
   if (!state.notebook) return;
   const cell = state.notebook.cells.find((candidate) => candidate.id === cellId);
   if (!cell) return;
   cell.body = body;
   delete state.runs[cellId];
+  delete state.checks[cellId];
   render();
 }
 
@@ -209,6 +245,7 @@ function updateCellFilename(cellId: string, filename: string) {
   cell.title = titleFromFilename(clean);
   cell.ext = extFromFilename(clean);
   delete state.runs[cellId];
+  delete state.checks[cellId];
   render();
 }
 
@@ -260,12 +297,29 @@ function runOutput(output: RunOutput): string {
 
 function scriptPreview(cell: Cell): string {
   const result = state.runs[cell.id];
+  const check = state.checks[cell.id];
+
+  const checkHtml = check
+    ? `
+      <div class="run-panel ${check.ok ? "run-ok" : "run-failed"}">
+        <div class="run-status">
+          <strong>${check.ok ? "Types OK" : "Type Error"}</strong>
+          <span>${check.durationMs} ms</span>
+          <span>check ${escapeHtml(check.checkId)}</span>
+        </div>
+        ${check.error ? `<pre class="run-error">${escapeHtml(check.error.message)}</pre>` : ""}
+        ${check.stdout ? `<pre class="run-stream">stdout\n${escapeHtml(check.stdout)}${check.stdoutTruncated ? "\n[truncated]" : ""}</pre>` : ""}
+        ${check.stderr ? `<pre class="run-stream error-stream">stderr\n${escapeHtml(check.stderr)}${check.stderrTruncated ? "\n[truncated]" : ""}</pre>` : ""}
+      </div>
+    `
+    : "";
 
   if (!result) {
     return `
       <div class="run-panel muted-panel">
         <div class="run-status">Not run yet.</div>
       </div>
+      ${checkHtml}
     `;
   }
 
@@ -286,6 +340,7 @@ function scriptPreview(cell: Cell): string {
       ${result.stdout ? `<pre class="run-stream">stdout\n${escapeHtml(result.stdout)}${result.stdoutTruncated ? "\n[truncated]" : ""}</pre>` : ""}
       ${result.stderr ? `<pre class="run-stream error-stream">stderr\n${escapeHtml(result.stderr)}${result.stderrTruncated ? "\n[truncated]" : ""}</pre>` : ""}
     </div>
+    ${checkHtml}
   `;
 }
 
@@ -302,7 +357,8 @@ function cellActions(cell: Cell): string {
   if (cell.ext === "js" || cell.ext === "ts") {
     return `
       <div class="cell-actions">
-        <button data-action="run-cell" data-cell-id="${cell.id}">Run JS</button>
+        ${cell.ext === "ts" ? `<button data-action="check-cell" data-cell-id="${cell.id}">Check Types</button>` : ""}
+        <button data-action="run-cell" data-cell-id="${cell.id}">Run TS</button>
       </div>
     `;
   }
@@ -331,10 +387,10 @@ function renderCell(cell: Cell): string {
           />
         </div>
         <select class="cell-type" aria-label="Cell type" data-cell-id="${cell.id}">
-          ${["html", "css", "md", "js", "json"].map((ext) => `
+          ${["html", "css", "md", "ts", "json"].map((ext) => `
             <option value="${ext}" ${cell.ext === ext ? "selected" : ""}>.${ext}</option>
           `).join("")}
-          ${cell.ext === "ts" ? `<option value="ts" selected>.ts</option>` : ""}
+          ${cell.ext === "js" ? `<option value="js" selected>.js</option>` : ""}
           ${cell.ext === "unknown" ? `<option value="unknown" selected>unknown</option>` : ""}
         </select>
       </header>
@@ -462,6 +518,7 @@ function render() {
       const cell = state.notebook.cells.find((candidate) => candidate.id === cellId);
       if (cell) cell.body = textarea.value;
       delete state.runs[cellId];
+      delete state.checks[cellId];
 
       const card = textarea.closest(".cell-card");
       const output = card?.querySelector<HTMLDivElement>(".cell-output");
@@ -508,6 +565,13 @@ function bindCellActionButtons(root: ParentNode) {
     button.addEventListener("click", () => {
       const cellId = button.dataset.cellId;
       if (cellId) void runCell(cellId);
+    });
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('[data-action="check-cell"]').forEach((button) => {
+    button.addEventListener("click", () => {
+      const cellId = button.dataset.cellId;
+      if (cellId) void checkCell(cellId);
     });
   });
 }

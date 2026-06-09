@@ -22,8 +22,8 @@ Astryx notebooks are small folders with a source file, data folder, and output f
   "status": "empty"
 }
 
-*** 003 FirstRun.js
-ctx.text("Hello from a bounded local JavaScript cell.");
+*** 003 FirstRun.ts
+ctx.text("Hello from a bounded local TypeScript cell.");
 ctx.json({
   cell: "003",
   runtime: "bun",

@@ -1,0 +1,12 @@
+{
+  "name": "@astryx/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./config": "./src/config.ts",
+    "./model": "./src/model.ts",
+    "./parse": "./src/parse.ts",
+    "./run": "./src/run.ts"
+  }
+}

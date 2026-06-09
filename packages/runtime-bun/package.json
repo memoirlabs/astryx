@@ -1,0 +1,12 @@
+{
+  "name": "@astryx/runtime-bun",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./index": "./src/index.ts"
+  },
+  "dependencies": {
+    "@astryx/core": "workspace:*"
+  }
+}

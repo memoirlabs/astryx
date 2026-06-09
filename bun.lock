@@ -12,8 +12,43 @@
         "playwright": "latest",
       },
     },
+    "apps/local": {
+      "name": "@astryx/local",
+      "version": "0.1.0",
+      "dependencies": {
+        "@astryx/core": "workspace:*",
+        "@astryx/renderer": "workspace:*",
+        "@astryx/runtime-bun": "workspace:*",
+      },
+    },
+    "packages/core": {
+      "name": "@astryx/core",
+      "version": "0.1.0",
+    },
+    "packages/renderer": {
+      "name": "@astryx/renderer",
+      "version": "0.1.0",
+      "dependencies": {
+        "@astryx/core": "workspace:*",
+      },
+    },
+    "packages/runtime-bun": {
+      "name": "@astryx/runtime-bun",
+      "version": "0.1.0",
+      "dependencies": {
+        "@astryx/core": "workspace:*",
+      },
+    },
   },
   "packages": {
+    "@astryx/core": ["@astryx/core@workspace:packages/core"],
+
+    "@astryx/local": ["@astryx/local@workspace:apps/local"],
+
+    "@astryx/renderer": ["@astryx/renderer@workspace:packages/renderer"],
+
+    "@astryx/runtime-bun": ["@astryx/runtime-bun@workspace:packages/runtime-bun"],
+
     "@types/bun": ["@types/bun@1.3.14", "", { "dependencies": { "bun-types": "1.3.14" } }, "sha512-h1hFqFVcvAvD9j9K7ZW7vd82aSA+rTdznZa+5bwvCwqSB1jmmfLcbIWhOLx1/+boy/xmjgCs/OMUL8hRJSmnPw=="],
 
     "@types/node": ["@types/node@25.9.2", "", { "dependencies": { "undici-types": ">=7.24.0 <7.24.7" } }, "sha512-G05zqtJhcDLb8uslf5EjCxXg9G1KQxiV8OS0R26IC//Eoyitzqe8z37I7cqvnZlrlSfgocQRfSn/AHBZJJFyGw=="],

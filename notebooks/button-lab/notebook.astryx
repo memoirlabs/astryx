@@ -5,7 +5,7 @@
 *** 000 Intro.md
 # HTML Lab
 
-A tiny notebook for plain HTML, CSS, JSON, and JavaScript cells.
+A tiny notebook for plain HTML, CSS, JSON, and TypeScript cells.
 
 *** 001 BasicButton.html
 <button class="button primary">Save changes</button>
@@ -38,8 +38,14 @@ body {
   "states": ["default", "hover", "disabled", "loading"]
 }
 
-*** 004 ButtonMatrix.js
-const data = await ctx.data.json("button-matrix.json").catch(() => ({
+*** 004 ButtonMatrix.ts
+type ButtonData = {
+  variants: string[];
+  sizes: string[];
+  states: string[];
+};
+
+const data = await ctx.data.json<ButtonData>("button-matrix.json").catch(() => ({
   variants: ["primary", "ghost"],
   sizes: ["small", "medium"],
   states: ["default", "disabled"]

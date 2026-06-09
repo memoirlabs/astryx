@@ -1,0 +1,14 @@
+{
+  "name": "@astryx/renderer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./markdown": "./src/markdown.ts",
+    "./render": "./src/render.ts",
+    "./style": "./src/style.ts"
+  },
+  "dependencies": {
+    "@astryx/core": "workspace:*"
+  }
+}

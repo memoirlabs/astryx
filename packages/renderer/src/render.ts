@@ -1,4 +1,4 @@
-import type { Cell } from "../../core/src/model";
+import type { Cell } from "@astryx/core/model";
 import { previewCss } from "./style";
 
 export function collectNotebookCss(cells: Cell[]): string {

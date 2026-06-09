@@ -1,8 +1,8 @@
 import { appendFile } from "node:fs/promises";
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
-import type { Cell, NotebookConfig } from "../../core/src/model";
-import type { CellCheckResult, CellRunResult, RunOutput } from "../../core/src/run";
+import type { Cell, NotebookConfig } from "@astryx/core/model";
+import type { CellCheckResult, CellRunResult, RunOutput } from "@astryx/core/run";
 
 type RunOptions = {
   notebookDir: string;

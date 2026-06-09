@@ -1,10 +1,10 @@
 import { existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
-import { normalizeConfig } from "../../../../packages/core/src/config";
-import type { Cell, Notebook, NotebookSummary } from "../../../../packages/core/src/model";
-import { parseAstryx } from "../../../../packages/core/src/parse";
-import { exportFilename, renderHtmlFragment } from "../../../../packages/renderer/src/render";
-import { checkTypeScriptCell, runTypeScriptCell } from "../../../../packages/runtime-bun/src/index";
+import { normalizeConfig } from "@astryx/core/config";
+import type { Cell, Notebook, NotebookSummary } from "@astryx/core/model";
+import { parseAstryx } from "@astryx/core/parse";
+import { exportFilename, renderHtmlFragment } from "@astryx/renderer/render";
+import { checkTypeScriptCell, runTypeScriptCell } from "@astryx/runtime-bun/index";
 
 const root = process.cwd();
 const notebooksRoot = join(root, "notebooks");

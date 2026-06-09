@@ -256,21 +256,25 @@ Current repo layout:
 
 ```txt
 apps/local/
+  package.json         @astryx/local
   src/server/          Bun HTTP server and APIs
   src/web/             browser notebook shell
 
 packages/core/
+  package.json         @astryx/core
   src/model.ts         shared notebook types
   src/config.ts        tiny TOML config parser
   src/parse.ts         notebook source parser/serializer
   src/run.ts           run result/output types
 
 packages/renderer/
+  package.json         @astryx/renderer
   src/markdown.ts      markdown preview renderer
   src/render.ts        HTML fragment rendering/export helpers
   src/style.ts         tiny reset CSS
 
 packages/runtime-bun/
+  package.json         @astryx/runtime-bun
   src/index.ts         bounded local JS execution
 
 scripts/

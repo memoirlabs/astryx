@@ -1,0 +1,11 @@
+{
+  "name": "@astryx/local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@astryx/core": "workspace:*",
+    "@astryx/renderer": "workspace:*",
+    "@astryx/runtime-bun": "workspace:*"
+  }
+}

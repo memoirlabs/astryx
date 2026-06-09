@@ -57,10 +57,10 @@ out/              exported output files
 ## Repo shape
 
 ```txt
-apps/local/              Bun server and browser shell
-packages/core/           notebook model, config, parser, serializer
-packages/renderer/       markdown/html rendering
-packages/runtime-bun/    bounded local .js cell execution
+apps/local/              @astryx/local, Bun server and browser shell
+packages/core/           @astryx/core, notebook model/config/parser/run types
+packages/renderer/       @astryx/renderer, markdown/html rendering
+packages/runtime-bun/    @astryx/runtime-bun, bounded local cell execution
 scripts/                 local project scripts
 notebooks/               example/local notebooks
 ```
