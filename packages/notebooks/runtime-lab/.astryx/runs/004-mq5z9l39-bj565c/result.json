@@ -1,0 +1,12 @@
+{
+  "outputs": [
+    {
+      "kind": "text",
+      "value": "this output should still be captured before the throw"
+    }
+  ],
+  "error": {
+    "message": "intentional runtime failure",
+    "stack": "Error: intentional runtime failure\n    at /Volumes/T9/cursor/astryx/notebooks/runtime-lab/.astryx/runs/004-mq5z9l39-bj565c/run.js:74:11"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "outputs": [
+    {
+      "kind": "text",
+      "value": "result.json"
+    },
+    {
+      "kind": "json",
+      "value": {
+        "target": "nested/result.json"
+      }
+    }
+  ]
+}

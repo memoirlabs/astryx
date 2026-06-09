@@ -1,0 +1,124 @@
+---
+import "../styles/global.css";
+
+const previewRows = [
+  { id: "001", file: "Intro.md", status: "ready", accent: "yellow" },
+  { id: "002", file: "Button.html", status: "preview", accent: "cyan" },
+  { id: "003", file: "Tokens.css", status: "linked", accent: "purple" },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Astryx is a minimal local-first notebook for designing and shipping small web experiments."
+    />
+    <title>Astryx</title>
+  </head>
+  <body>
+    <main class="site-shell">
+      <nav class="topbar" aria-label="Primary">
+        <a class="brand" href="/" aria-label="Astryx home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <strong>Astryx</strong>
+        </a>
+        <div class="nav-actions">
+          <a href="#preview">Preview</a>
+          <a href="#workflow">Workflow</a>
+        </div>
+      </nav>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">local-first web notebooks</p>
+          <h1 id="hero-title">Small notebooks for fast interface work.</h1>
+          <p class="lede">
+            Compose HTML, CSS, Markdown, JSON, and TypeScript cells in a quiet
+            workspace, then export the useful pieces when they are ready.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="#preview">View notebook shell</a>
+            <a class="button secondary" href="https://github.com/" rel="noreferrer">GitHub soon</a>
+          </div>
+        </div>
+
+        <div class="notebook-window" id="preview" aria-label="Notebook preview placeholder">
+          <div class="window-bar">
+            <div class="window-title">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span>button-lab / live preview</span>
+            </div>
+            <span class="window-mode">placeholder</span>
+          </div>
+
+          <div class="notebook-grid">
+            <aside class="outline" aria-label="Notebook outline">
+              <p>Sections</p>
+              <a href="#preview">Start</a>
+              <a href="#preview">Component</a>
+              <a href="#preview">Theme</a>
+            </aside>
+
+            <div class="cell-stack">
+              {
+                previewRows.map((row) => (
+                  <article class={`cell-card ${row.accent}`}>
+                    <header class="cell-header">
+                      <span class="cell-id">{row.id}</span>
+                      <span class="cell-file">{row.file}</span>
+                      <span class="cell-status">{row.status}</span>
+                    </header>
+                    <div class="cell-body">
+                      {row.file.endsWith(".html") ? (
+                        <div class="interactive-slot">
+                          <div class="slot-toolbar">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                          <div class="slot-stage">
+                            <div class="preview-card">
+                              <p>Interactive notebook preview</p>
+                              <button type="button">Mount target</button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div class="code-lines" aria-hidden="true">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workflow" id="workflow" aria-label="Workflow">
+        <div>
+          <span class="step-index">01</span>
+          <h2>Write cells</h2>
+          <p>Keep notes, source, data, and previews in one compact vertical feed.</p>
+        </div>
+        <div>
+          <span class="step-index">02</span>
+          <h2>Run locally</h2>
+          <p>Use the Bun-backed shell for trusted experiments and quick checks.</p>
+        </div>
+        <div>
+          <span class="step-index">03</span>
+          <h2>Export pieces</h2>
+          <p>Save the HTML or screenshots that are worth carrying forward.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

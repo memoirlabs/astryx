@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "dev": "bun --watch apps/local/src/server/index.ts",
+    "dev:website": "bun run --cwd apps/website dev",
+    "build:website": "bun run --cwd apps/website build",
     "new": "bun scripts/new-notebook.ts",
     "check": "tsc --noEmit",
     "screenshots:install": "bunx playwright install chromium"

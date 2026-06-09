@@ -1,0 +1,16 @@
+{
+  "outputs": [
+    {
+      "kind": "text",
+      "value": "Hello from a bounded local TypeScript cell."
+    },
+    {
+      "kind": "json",
+      "value": {
+        "cell": "010.040",
+        "runtime": "bun",
+        "ok": true
+      }
+    }
+  ]
+}

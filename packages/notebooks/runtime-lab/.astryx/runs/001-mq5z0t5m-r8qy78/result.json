@@ -1,0 +1,28 @@
+{
+  "outputs": [
+    {
+      "kind": "text",
+      "value": "basic text output"
+    },
+    {
+      "kind": "json",
+      "value": {
+        "ok": true,
+        "cells": 5
+      }
+    },
+    {
+      "kind": "table",
+      "value": [
+        {
+          "name": "alpha",
+          "score": 1
+        },
+        {
+          "name": "beta",
+          "score": 2
+        }
+      ]
+    }
+  ]
+}

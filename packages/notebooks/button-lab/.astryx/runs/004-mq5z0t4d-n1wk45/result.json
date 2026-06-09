@@ -1,0 +1,34 @@
+{
+  "outputs": [
+    {
+      "kind": "json",
+      "value": {
+        "variants": [
+          "primary",
+          "ghost"
+        ],
+        "sizes": [
+          "small",
+          "medium"
+        ],
+        "states": [
+          "default",
+          "disabled"
+        ]
+      }
+    },
+    {
+      "kind": "table",
+      "value": [
+        {
+          "variant": "primary",
+          "states": 2
+        },
+        {
+          "variant": "ghost",
+          "states": 2
+        }
+      ]
+    }
+  ]
+}

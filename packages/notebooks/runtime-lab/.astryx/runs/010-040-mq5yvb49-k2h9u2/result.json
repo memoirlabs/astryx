@@ -1,0 +1,12 @@
+{
+  "outputs": [
+    {
+      "kind": "json",
+      "value": {
+        "read": "Runtime Lab",
+        "total": 16,
+        "wrote": "runtime-lab-result.json"
+      }
+    }
+  ]
+}
