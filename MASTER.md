@@ -4,7 +4,7 @@ This document is the source of truth for what Astryx is, where things live, and 
 
 ## One Sentence
 
-Astryx is a local-first notebook for plain Markdown, HTML, CSS, JSON, and JavaScript, with a browser app that renders cells, runs JavaScript locally, and exports useful artifacts.
+Astryx is a local-first notebook for plain Markdown, HTML, CSS, JSON, and TypeScript, with a browser app that renders cells, typechecks/runs TypeScript locally, and exports useful artifacts.
 
 It is not Jupyter, not a full app framework, not a fake UI library, and not a sandbox platform.
 
@@ -32,9 +32,9 @@ Astryx should make it easy to:
 write notes
 write normal HTML
 write CSS beside that HTML
-run small JavaScript cells
+run small TypeScript cells
 preview HTML/CSS in a browser
-capture structured JS outputs
+capture structured TypeScript outputs
 export fragments, screenshots, and later benchmarks
 keep every notebook as a normal local folder
 ```
@@ -90,7 +90,7 @@ button {
   padding: 8px 12px;
 }
 
-*** 003 Run.js
+*** 003 Run.ts
 ctx.json({ ok: true });
 ```
 
@@ -127,7 +127,7 @@ Plain notes render naturally in any Markdown preview.
 }
 ```
 
-```js id=003 name=data
+```ts id=003 name=data
 ctx.json({ ok: true });
 ```
 ````
@@ -137,7 +137,7 @@ Why this is better:
 ```txt
 readable in any IDE
 normal Markdown preview works for notes
-HTML/CSS/JS are obvious fenced code blocks
+HTML/CSS/TS are obvious fenced code blocks
 no custom star syntax to learn
 browser app can still parse cells
 no second generated Markdown representation needed
@@ -156,7 +156,7 @@ Current cell behavior should be:
 .html  render an HTML fragment
 .css   inject into HTML previews/exports
 .json  render formatted JSON
-.js    run locally and render outputs
+.ts    typecheck, run locally, and render outputs
 ```
 
 HTML cells should be fragments by default, not full documents:
@@ -183,9 +183,9 @@ If we later need full-document mode, it should be explicit, for example:
 ```
 ````
 
-## JavaScript Execution
+## TypeScript Execution
 
-JavaScript cells run locally through Bun, but not in the server process.
+TypeScript cells typecheck and run locally through Bun, but not in the server process.
 
 Execution path:
 
@@ -213,14 +213,14 @@ This is operational isolation. It is not security sandboxing. Astryx notebooks a
 
 ## Output Model
 
-JavaScript cells should produce outputs through a small context API:
+TypeScript cells should produce outputs through a small context API:
 
-```js
+```ts
 ctx.text("hello");
 ctx.json({ ok: true });
 ctx.table([{ name: "alpha", score: 1 }]);
 
-const input = await ctx.data.json("input.json");
+const input = await ctx.data.json<{ ok: boolean }>("input.json");
 await ctx.out.writeJson("result.json", input);
 ```
 
@@ -244,7 +244,7 @@ Default exports should be literal and unsurprising:
 ```txt
 HTML cell export       HTML fragment + injected CSS
 Screenshot            rendered fragment in Chromium
-JS output export       JSON run result, later
+TS output export       JSON run result, later
 Benchmark export       run report, later
 ```
 
@@ -275,14 +275,14 @@ packages/renderer/
 
 packages/runtime-bun/
   package.json         @astryx/runtime-bun
-  src/index.ts         bounded local JS execution
+  src/index.ts         bounded local TS execution
 
 scripts/
   new-notebook.ts      creates a notebook folder
 
 notebooks/
   empty/               minimal example
-  button-lab/          HTML/CSS/JS example
+  button-lab/          HTML/CSS/TS example
   runtime-lab/         runtime behavior tests
 ```
 
@@ -292,7 +292,7 @@ notebooks/
 
 `packages/renderer` should convert cells into display/export strings. It should not invent a design system.
 
-`packages/runtime-bun` should run JS cells with limits. It should not know about browser layout.
+`packages/runtime-bun` should typecheck and run TS cells with limits. It should not know about browser layout.
 
 `apps/local` should glue everything together: filesystem, API routes, browser bundle, and notebook UI.
 
@@ -368,7 +368,7 @@ Use:
 Markdown for notes
 HTML for markup
 CSS for style
-JavaScript for logic
+TypeScript for logic
 JSON for data
 local folders for notebooks
 browser app for rich rendering

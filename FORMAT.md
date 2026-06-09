@@ -73,7 +73,7 @@ Cell IDs are global within the notebook source and count upward. Legacy `010.020
 .md
 .html
 .css
-.js
+.ts
 .json
 ```
 

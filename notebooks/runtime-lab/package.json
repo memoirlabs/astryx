@@ -1,0 +1,7 @@
+{
+  "name": "runtime-lab-notebook",
+  "private": true,
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {}
+}

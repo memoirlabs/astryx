@@ -21,7 +21,7 @@ read config
 read source
 parse source
 save source
-run bounded .js cells in a child Bun process
+typecheck and run bounded .ts cells in a child Bun process
 export HTML
 screenshot HTML if Playwright exists
 ```
@@ -43,7 +43,7 @@ A pure browser app requires File System Access API and awkward persistence rules
 
 ```txt
 real files
-real JavaScript
+real TypeScript
 real local output folder
 same UI can move to Tauri later
 ```
@@ -70,14 +70,14 @@ Screenshots are server-side through Playwright. HTML is rendered into a real Chr
 
 If Playwright is missing, the screenshot API returns a clear error and export HTML still works.
 
-## JavaScript execution strategy
+## TypeScript execution strategy
 
-`.js` cells run locally and are trusted, but they do not run inside the server process.
+`.ts` cells typecheck/run locally and are trusted, but they do not run inside the server process.
 
 ```txt
 server API
 → packages/runtime-bun
-→ notebooks/<name>/.astryx/runs/<run-id>/run.js
+→ notebooks/<name>/.astryx/runs/<run-id>/run.ts
 → child Bun process
 → timeout/output/result caps
 ```

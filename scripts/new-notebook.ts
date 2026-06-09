@@ -82,6 +82,16 @@ ctx.json({
 
 await Bun.write(join(notebookDir, "astryx.toml"), config);
 await Bun.write(join(notebookDir, "notebook.astryx"), source);
+await Bun.write(
+  join(notebookDir, "package.json"),
+  `${JSON.stringify({
+    name: `${name}-notebook`,
+    private: true,
+    type: "module",
+    dependencies: {},
+    devDependencies: {},
+  }, null, 2)}\n`,
+);
 
 console.log(`Created notebooks/${name}`);
 console.log("Run: bun run dev");

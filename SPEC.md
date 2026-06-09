@@ -1,6 +1,6 @@
 # Astryx v0 Specification
 
-This describes the current prototype. The long-term source-format direction is in [MASTER.md](/Volumes/T9/cursor/astryx/MASTER.md): move toward a Markdown-native `notebook.md` source with fenced HTML/CSS/JS cells.
+This describes the current prototype. The long-term source-format direction is in [MASTER.md](/Volumes/T9/cursor/astryx/MASTER.md): move toward a Markdown-native `notebook.md` source with fenced HTML/CSS/TS cells.
 
 ## Goal
 
@@ -21,7 +21,7 @@ It should not feel like a full web app project, Jupyter clone, or containerized 
 6. Use iframes for rendered HTML cells.
 7. Render plain HTML, not an Astryx-specific UI vocabulary.
 8. Support optional CSS cells.
-9. Add component rendering later only if plain HTML/JS is not enough.
+9. Add component rendering later only if plain HTML/TS is not enough.
 ```
 
 ## Notebook folder
@@ -125,10 +125,10 @@ notebooks/button-lab/notebook.astryx
 .html    rendered HTML island
 .css     CSS injected into HTML previews
 .json    formatted data cell
-.js      bounded local Bun JavaScript cell
+.ts      bounded local Bun TypeScript cell
 ```
 
-Future cell types should be added only when plain HTML/CSS/JS stops being enough.
+Future cell types should be added only when plain HTML/CSS/TS stops being enough.
 
 ## Rendering
 
@@ -153,11 +153,11 @@ For `.json` cells:
 cell JSON → formatted JSON preview
 ```
 
-For `.js` cells:
+For `.ts` cells:
 
 ```txt
-cell JavaScript
-→ temporary .astryx/runs/<run-id>/run.js
+cell TypeScript
+→ temporary .astryx/runs/<run-id>/run.ts
 → child Bun process
 → captured stdout/stderr/result
 ```

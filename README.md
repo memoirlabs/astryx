@@ -1,6 +1,6 @@
 # Astryx Starter
 
-Astryx is a small local-first notebook prototype for HTML, CSS, Markdown, JSON, and JavaScript cells.
+Astryx is a small local-first notebook prototype for HTML, CSS, Markdown, JSON, and TypeScript cells.
 
 This starter intentionally begins with the smallest buildable thing:
 
@@ -9,7 +9,7 @@ Bun local host
 + browser notebook shell
 + vertical cell feed
 + HTML / CSS / Markdown / JSON cells
-+ bounded local JavaScript cells
++ bounded local TypeScript cells
 + export HTML
 + optional screenshot PNG through Playwright
 ```
@@ -65,13 +65,13 @@ scripts/                 local project scripts
 notebooks/               example/local notebooks
 ```
 
-## JavaScript cells
+## TypeScript cells
 
-`.js` cells run as trusted local code in a child Bun process. They are bounded by notebook execution config, but they are not a hostile-code sandbox.
+`.ts` cells run as trusted local code in a child Bun process and can be typechecked per cell. They are bounded by notebook execution config, but they are not a hostile-code sandbox.
 
 ```astryx
-*** 003 FirstRun.js
-ctx.text("Hello from JavaScript");
+*** 003 FirstRun.ts
+ctx.text("Hello from TypeScript");
 ctx.json({ ok: true });
 await ctx.out.writeJson("result.json", { ok: true });
 ```
@@ -96,10 +96,10 @@ Current cell views:
 .md    simple markdown preview
 .json  formatted JSON preview
 .css   code preview and injected into HTML previews
-.js    Run JS button with text/json/table/stdout/stderr result view
+.ts    Check Types and Run TS buttons with text/json/table/stdout/stderr result view
 ```
 
-Only `.html` has full visual export/screenshot rendering today. `.js` renders execution results, not components.
+Only `.html` has full visual export/screenshot rendering today. `.ts` renders execution results, not components.
 
 ## Starter source example
 
@@ -147,7 +147,7 @@ If Playwright is not installed, export HTML still works.
 ## What to build next
 
 1. Cell-level insert/delete/move controls.
-2. Better editor behavior for plain HTML/CSS/JS.
-3. Richer `.js` helpers and output records.
+2. Better editor behavior for plain HTML/CSS/TS.
+3. Richer `.ts` helpers and output records.
 4. `.bench` cells for mount time, heap, JS size, screenshot, and viewport tests.
 5. Tauri wrapper after the web shell feels good.

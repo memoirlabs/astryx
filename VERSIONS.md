@@ -39,12 +39,12 @@ optional .css cells
 out/ file browser
 ```
 
-## v0.2 — JavaScript Cells
+## v0.2 — TypeScript Cells
 
 Features:
 
 ```txt
-.js cells executed by child Bun process
+.ts cells typechecked and executed by child Bun process
 cell output records
 JSON/table outputs
 data.json/data.text helpers
